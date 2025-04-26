@@ -104,10 +104,6 @@ export const loginUser = async (req, res) => {
             throw createError(400, 'Invalid password');
         }
 
-        // Verify user role is allowed
-        if (user.role !== 'teacher' && user.role !== 'student') {
-            throw createError(403, 'Access denied');
-        }
 
         // Ensure role matches expected role
         if (user.role !== role.toLowerCase()) {
@@ -116,7 +112,10 @@ export const loginUser = async (req, res) => {
 
         // Generate JWT token storing user ID
         const token = jwt.sign(
-            { id: user._id },
+            {
+                id: user._id,
+                email: user.email,
+            },
             process.env.JWT_SECRET
         );
 
@@ -133,10 +132,7 @@ export const loginUser = async (req, res) => {
             statusCode: 200,
             message: 'Logged in successfully',
             data: {
-                token,
                 user: {
-                    id: user._id,
-                    email: user.email,
                     role: user.role
                 }
             }
@@ -150,6 +146,47 @@ export const loginUser = async (req, res) => {
         sendErrorResponse(res, {
             statusCode: error.statusCode || 500,
             message: error.message || 'Failed to login user'
+        });
+    }
+};
+
+/**
+ * @desc Get the authenticated user's profile
+ * @route GET /api/profile
+ * @access Protected (Requires isAuthenticated middleware)
+ */
+export const getUserProfile = async (req, res) => {
+    try {
+        // req.user is populated by isAuthenticated middleware
+        const userId = req.user.id;
+
+        // Fetch user data from database (excluding sensitive fields like password)
+        const user = await User.findById(userId).select('-password');
+
+        if (!user) {
+            return sendErrorResponse(res, {
+                statusCode: 404,
+                message: 'User not found',
+            });
+        }
+
+        // Send user profile data
+        sendResponse(res, {
+            statusCode: 200,
+            message: 'User profile fetched successfully',
+            data: {
+                id: user._id,
+                email: user.email,
+                role: user.role,
+            },
+        });
+
+    } catch (error) {
+        // Log and send server error
+        logError(error);
+        sendErrorResponse(res, {
+            statusCode: 500,
+            message: 'Failed to fetch user profile',
         });
     }
 };

@@ -1,7 +1,7 @@
 import express from 'express';
 import cors from 'cors';
 import CORS_OPTIONS from './configs/cors-setup.js';
-// import cookieParser from 'cookie-parser';
+import cookieParser from 'cookie-parser';
 
 // Connfigure of the express app
 const app = express();
@@ -9,7 +9,7 @@ const app = express();
 // Middleware to parse JSON bodies
 app.use(express.json({ limit: '16kb' }));
 app.use(express.urlencoded({ extended: true }));
-// app.use(cookieParser());
+app.use(cookieParser());
 app.use(cors(CORS_OPTIONS));
 
 app.use((err, req, res, next) => {
