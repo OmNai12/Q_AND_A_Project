@@ -110,7 +110,7 @@ export const loginUser = async (req, res) => {
         }
 
         // Ensure role matches expected role
-        if (user.role !== role) {
+        if (user.role !== role.toLowerCase()) {
             throw createError(403, 'Role mismatch');
         }
 
