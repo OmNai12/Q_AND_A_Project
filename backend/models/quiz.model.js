@@ -1,7 +1,7 @@
 import mongoose from "mongoose";
 
 const quizSchema = new mongoose.Schema({
-    quizId:{
+    quizId: {
         type: String,
         required: true,
         unique: true,
@@ -17,13 +17,18 @@ const quizSchema = new mongoose.Schema({
         required: true,
         trim: true,
     },
-    filePath: {
+    fileName: {
         type: String,
         // required: true,
         // trim: true,
     },
-    quiz:{
+    quiz: {
         type: Array,
+        default: [],
         // required: true,
     },
-});
+},
+    {
+        timestamps: true,
+    });
+export const Quiz = mongoose.model("Quiz", quizSchema);

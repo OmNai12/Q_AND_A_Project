@@ -28,11 +28,14 @@ app.use((err, req, res, next) => {
 /** API ROUTES WILL BE DECLARED */
 import healthcheckRoutes from './routes/health-check.route.js';
 import userRoutes from './routes/user.routes.js';
+import quizRoutes from './routes/quiz.routes.js';
 
 // Healthcheck route
 app.use('/api/v1/healthcheck', healthcheckRoutes);
 // User routes
 app.use('/api/v1/user', userRoutes);
+// Quiz routes
+app.use('/api/v1/quiz', quizRoutes);
 /** API ROUTES WILL BE DECLARED */
 
 
