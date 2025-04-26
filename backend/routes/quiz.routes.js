@@ -9,7 +9,7 @@ const router = express.Router();
 // Create Quiz route
 router.post(
     '/create',
-    // isAuthenticated,                 // 1. Check valid token
+    isAuthenticated,                    // 1. Check valid token
     uploadPdf.single('pdfFile'),        // 2. Upload the PDF file
     handleMulterError,                  // 3. Handle multer errors
     createQuiz                          // 4. Save quiz + file name

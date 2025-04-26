@@ -11,11 +11,13 @@ import { Quiz } from '../models/quiz.model.js'; // Mongoose Quiz model
  */
 export const createQuiz = async (req, res) => {
     try {
-        const { quizId, quizName, teacherId } = req.body;
+        console.log('Creating quiz with file:', req.file);  
+        const teacherId = req.user.id; // Populated by isAuthenticated middleware
+        const { quizName } = req.body;
 
         // Validate required fields
-        if (!quizId || !quizName || !teacherId) {
-            throw createError(400, 'All fields (quizId, quizName, teacherId) are required');
+        if (!quizName) {
+            throw createError(400, 'All fields (quizName) are required');
         }
 
         // Validate uploaded file
@@ -23,9 +25,15 @@ export const createQuiz = async (req, res) => {
             throw createError(400, 'Quiz PDF file is required');
         }
 
+        const characters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
+        let result = '';
+        for (let i = 0; i < 10; i++) {
+            result += characters.charAt(Math.floor(Math.random() * characters.length));
+        }
+
         // Save quiz along with uploaded PDF filename
         const createdQuiz = await Quiz.create({
-            quizId,
+            quizId: result,
             quizName,
             teacherId,
             fileName: req.file.filename, // Save filename
