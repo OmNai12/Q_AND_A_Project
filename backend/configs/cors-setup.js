@@ -1,0 +1,9 @@
+const CORS_OPTIONS = {
+    origin: 'http://localhost:5173', //Vite dev server
+    credentials: true,
+    methods: 'GET,HEAD,PUT,PATCH,POST,DELETE',
+    allowedHeaders: 'Content-Type, Authorization, X-Requested-With',
+    exposedHeaders: 'Content-Length, X-JSON',
+}
+
+export default CORS_OPTIONS;

@@ -1,0 +1,24 @@
+**/node_modules/
+**/__pycache__/
+**/.env
+**/*.pdf
+model_dev/model_logic/tinyllama-1.1b-chat-v1.0.Q5_K_M.gguf
+model_dev/model_logic/mistral-7b-instruct-v0.1.Q6_K.gguf:Zone.Identifier
+model_dev/model_logic/mistral-7b-instruct-v0.1.Q6_K.gguf
+
+# Vite build output
+dist/
+
+# Log files
+*.log
+
+# Temporary files
+.DS_Store
+*.swp
+
+# Vite cache
+.vite/
+
+# Lock files (if applicable)
+yarn.lock
+package-lock.json
