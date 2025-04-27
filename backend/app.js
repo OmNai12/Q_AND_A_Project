@@ -2,6 +2,7 @@ import express from 'express';
 import cors from 'cors';
 import CORS_OPTIONS from './configs/cors-setup.js';
 import cookieParser from 'cookie-parser';
+import requestLogger from './middleware/request-logger.js';
 
 // Connfigure of the express app
 const app = express();
@@ -11,17 +12,18 @@ app.use(express.json({ limit: '16kb' }));
 app.use(express.urlencoded({ extended: true }));
 app.use(cookieParser());
 app.use(cors(CORS_OPTIONS));
+app.use(requestLogger);
 
-app.use((err, req, res, next) => {
-    const statusCode = err.statusCode || 500;
-    const status = `${statusCode}`.startsWith('4') ? 'fail' : 'error';
+// app.use((err, req, res, next) => {
+//     const statusCode = err.statusCode || 500;
+//     const status = `${statusCode}`.startsWith('4') ? 'fail' : 'error';
 
-    res.status(statusCode).json({
-        status,
-        message: err.message || 'Something went wrong',
-        timestamp: new Date().toISOString()
-    });
-});
+//     res.status(statusCode).json({
+//         status,
+//         message: err.message || 'Something went wrong',
+//         timestamp: new Date().toISOString()
+//     });
+// });
 
 
 
