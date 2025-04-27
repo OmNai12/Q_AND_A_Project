@@ -33,7 +33,7 @@ export const healthCheckRedis = async (req, res, next) => {
         };
 
         const redisStatus = await redisClient.ping();
-        await redisClient.lPush('pdf_jobs', JSON.stringify(jobPayload));
+        await redisClient.lPush('health_check_job', JSON.stringify(jobPayload));
         const queueLength = await redisClient.lLen('pdf_jobs');
 
 
