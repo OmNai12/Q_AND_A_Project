@@ -19,12 +19,32 @@ export const healthCheck = async (req, res, next) => {
 
 export const healthCheckRedis = async (req, res, next) => {
     try {
+
+        const { userId, message } = req.body;
+        if (!userId || !message) {
+            return next(createError(400, 'User ID and message are required'));
+        }
+
+        const jobPayload = {
+            userId,
+            message,
+            status: 'pending',
+            createdAt: Date.now()
+        };
+
         const redisStatus = await redisClient.ping();
+        await redisClient.lPush('pdf_jobs', JSON.stringify(jobPayload));
+        const queueLength = await redisClient.lLen('pdf_jobs');
+
+
         sendResponse(res, {
             statusCode: 200,
             message: 'Redis health check passed',
             data: {
                 redisStatus,
+                message: 'Job added to queue',
+                jobPayload,
+                queueLength: `Your job has been added to the queue. Current queue length is ${queueLength}.`,
             },
         });
     } catch (error) {

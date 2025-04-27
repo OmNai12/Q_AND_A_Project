@@ -6,6 +6,6 @@ const router = express.Router();
 // Healthcheck route
 router.route('/').get(healthCheck);
 // Healthcheck Redis route
-router.route('/redis').get(healthCheckRedis);
+router.route('/redis').post(healthCheckRedis);
 
 export default router;
