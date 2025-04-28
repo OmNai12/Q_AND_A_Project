@@ -3,6 +3,7 @@ import { sendResponse } from '../utils/send-response.js'; // For standardized su
 import { sendErrorResponse } from '../utils/send-error-response.js'; // For standardized error responses
 import { logError } from '../utils/logger.js'; // For logging errors
 import { Quiz } from '../models/quiz.model.js'; // Mongoose Quiz model
+import { redisClient } from '../db/db-redis.js'; // Redis client for job queue
 
 /**
  * @desc Create a new quiz with a PDF upload
@@ -11,7 +12,7 @@ import { Quiz } from '../models/quiz.model.js'; // Mongoose Quiz model
  */
 export const createQuiz = async (req, res) => {
     try {
-        console.log('Creating quiz with file:', req.file);  
+        console.log('Creating quiz with file:', req.file);
         const teacherId = req.user.id; // Populated by isAuthenticated middleware
         const { quizName } = req.body;
 
@@ -39,13 +40,25 @@ export const createQuiz = async (req, res) => {
             fileName: req.file.filename, // Save filename
         });
 
+        const jobPayload = {
+            teacherId,
+            quizId: result,
+            quizName,
+            fileName: req.file.filename, // Save filename
+            status: 'pending',
+            createdAt: Date.now()
+        };
+
+        await redisClient.lPush(process.env.REDIS_JOB_QUEUE, JSON.stringify(jobPayload));
+        const queueLength = await redisClient.lLen(process.env.REDIS_JOB_QUEUE);
+
         sendResponse(res, {
             statusCode: 201,
             message: 'Quiz created successfully',
             data: {
                 quizId: createdQuiz.quizId,
                 quizName: createdQuiz.quizName,
-                displayMessage: 'Please wait till we generate the quiz. It will take 10 to 15 minutes. You can close this window and relax.',
+                displayMessage: `Please wait till we generate the quiz. It will take 10 to 15 minutes. You can close this window and relax. You are at ${queueLength} in the queue.`,
             },
         });
 
