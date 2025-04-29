@@ -124,7 +124,7 @@ export const loginUser = async (req, res) => {
         res.cookie('token', token, {
             httpOnly: true,
             // secure: true, // Uncomment if want secure cookies (HTTPS only)
-            sameSite: 'Strict', // Protects against CSRF
+            // sameSite: 'Strict', // Protects against CSRF
             maxAge: Number(process.env.MAX_AGE) || 86400000  // Cookie expiry 
         });
 
