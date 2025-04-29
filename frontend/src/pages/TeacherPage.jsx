@@ -79,9 +79,9 @@ function TeacherPage() {
         setSubmitting(true);
 
         try {
-            console.log(quizName, pdfFile);
-            // formData.append('name', quizName);
-            // formData.append('pdf', pdfFile);
+            const formData = new FormData();
+            formData.append('quizName', quizName);
+            formData.append('pdfFile', pdfFile);
 
             const response = await axios.post(
                 import.meta.env.VITE_API_URL_CREATE_QUIZ,
@@ -201,7 +201,7 @@ function TeacherPage() {
                                                     id="pdf-upload"
                                                     name="pdf-upload"
                                                     type="file"
-                                                    accept=".pdf"
+                                                    accept="application/pdf"
                                                     className="sr-only"
                                                     onChange={handleFileChange}
                                                     required
