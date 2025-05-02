@@ -93,8 +93,16 @@ def get_json_data(file_path):
     return quiz
     # return json.dumps(quiz, indent=4)
 
+
+
+def health_check(filepath):
+    return {
+        'of': 1,
+        'filepath' : filepath
+        }
+
 if __name__ == "__main__":
-    json_data = get_json_data('/home/omnai/Q_AND_A_Project/model_dev/file_loader/PDF_Store/test1.pdf')
+    json_data = get_json_data('/sample/tath/data/test.pdf')
 
     import json
     print(json.dumps(json_data, indent=4))
