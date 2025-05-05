@@ -13,7 +13,7 @@ The system consists of six main components:
 5. **Python Worker Service**: Processes PDFs and generates quiz questions
 6. **Quiz Generation Engine**: Uses Mistral 7B model to create quiz questions
 
-!![System Architecture Diagram](./frontend/public/AI Based Quiz Generation System.png)
+![System Architecture Diagram](./frontend/public/AI Based Quiz Generation System.png)
 
 ## Directory Structure
 
