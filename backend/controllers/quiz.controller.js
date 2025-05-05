@@ -157,3 +157,46 @@ export const viewQuiz = async (req, res) => {
         });
     }
 };
+
+/**
+ * @desc View a specific quiz by its quizId
+ * @route GET /api/v1/quiz/view-quiz/:quizId
+ * @access Public
+ */
+export const viewQuizById = async (req, res) => {
+    try {
+        // Extract quizId from the route parameters
+        const { quizId } = req.params;
+
+        // Check if quizId is provided
+        if (!quizId) {
+            throw createError(400, 'Quiz ID is required');
+        }
+
+        // Find the quiz document by quizId, excluding teacherId and fileName
+        const quiz = await Quiz.findOne({ quizId }).select('-teacherId -fileName');
+
+        // If no quiz is found, return a 404 error
+        if (!quiz) {
+            throw createError(404, 'Quiz not found');
+        }
+
+        // Send successful response with quiz name and content
+        sendResponse(res, {
+            statusCode: 200,
+            message: 'Quiz fetched successfully',
+            data: {
+                quizName: quiz.quizName,
+                quiz: [...quiz.quiz],
+            },
+        });
+
+    } catch (error) {
+        // Log and return the error
+        logError(error);
+        sendErrorResponse(res, {
+            statusCode: error.statusCode || 500,
+            message: error.message || 'Failed to fetch quiz',
+        });
+    }
+};

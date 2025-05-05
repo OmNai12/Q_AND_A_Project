@@ -4,6 +4,7 @@ import SignIn from './pages/SignIn';
 // import SignUp from './pages/SignUp';
 import TeacherPage from './pages/TeacherPage';
 import StudentPage from './pages/StudentPage';
+import EditQuizPage from './pages/EditQuizPage';
 import NotFound from './pages/NotFound';
 
 function App() {
@@ -14,6 +15,7 @@ function App() {
       {/* <Route path="/signup" element={<SignUp />} /> */}
       <Route path="/teacher" element={<TeacherPage />} />
       <Route path="/student" element={<StudentPage />} />
+      <Route path="/edit-quiz/:quizId" element={<EditQuizPage />} />
       <Route path="*" element={<NotFound />} />
     </Routes>
   );

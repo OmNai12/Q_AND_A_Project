@@ -1,6 +1,6 @@
 import express from 'express';
 import { uploadPdf, handleMulterError } from '../middleware/pdf-uploads.js';
-import { createQuiz, submitQuizQuestion, viewQuiz } from '../controllers/quiz.controller.js';
+import { createQuiz, submitQuizQuestion, viewQuiz, viewQuizById } from '../controllers/quiz.controller.js';
 import isAuthenticated from '../middleware/is-authenticated.js';
 
 
@@ -20,5 +20,8 @@ router.put('/submit', submitQuizQuestion);
 
 // View quiz
 router.get('/view-all-quiz', isAuthenticated, viewQuiz);
+
+// View quiz by ID
+router.get('/view-quiz/:quizId', viewQuizById);
 
 export default router;

@@ -110,7 +110,12 @@ function TeacherPage() {
     };
 
     const handleModifyQuiz = (quizId) => {
-        navigate(`/edit-quiz/${quizId}`);
+        // e.preventDefault();
+        try {
+            navigate(`/edit-quiz/${quizId}`);
+        } catch (error) {
+            console.log('Error navigating to quiz:', error);
+        }
     };
 
     if (loading) {
@@ -266,7 +271,7 @@ function TeacherPage() {
                                                 <td className="px-6 py-4 whitespace-nowrap text-right text-sm font-medium">
                                                     <button
                                                         className="text-indigo-600 hover:text-indigo-900 font-semibold"
-                                                        onClick={() => handleModifyQuiz(quiz.id || quiz._id)}
+                                                        onClick={() => handleModifyQuiz(quiz.quizId || quiz._id)}
                                                     >
                                                         Modify
                                                     </button>
