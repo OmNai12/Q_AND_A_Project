@@ -27,10 +27,8 @@ The system consists of six main components:
 │   ├── node_modules/      # Node dependencies
 │   ├── routes/            # API routes
 │   ├── utils/             # Utility functions
-<!-- │   ├── .dockerignore      # Docker ignore file -->
 │   ├── .env               # Environment variables
 │   ├── app.js             # Express app setup
-<!-- │   ├── Dockerfile         # Docker configuration -->
 │   ├── index.js           # Entry point
 │   ├── package-lock.json  # Package lock file
 │   └── package.json       # Node dependencies list
