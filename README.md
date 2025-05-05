@@ -137,12 +137,6 @@ The application should now be running at:
 - Frontend: http://localhost:5173
 - Backend API: http://localhost:5000
 
-## Running with Docker (Optional)
-
-```bash
-docker-compose up
-```
-
 ## How It Works
 
 1. Teachers upload PDF educational materials through the web interface
@@ -151,11 +145,3 @@ docker-compose up
 4. The AI model processes the PDF content and generates quiz questions
 5. Generated quizzes are stored in MongoDB and made available to students
 6. Students can log in and take the quizzes assigned to them
-
-## Contributing
-
-Contributions are welcome! Please feel free to submit a Pull Request.
-
-## License
-
-This project is licensed under the MIT License - see the LICENSE file for details.
